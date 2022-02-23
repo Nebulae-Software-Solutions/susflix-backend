@@ -40,20 +40,20 @@ const allApiData = async () => {
 
 }; */
 
-const allData = async () => {
+/* const allData = async () => {
 
     const apiData = await allApiData();
-    /* const dbData = await allDbData(); */
-    const allDataContainer = apiData/* .concat(dbData); */
+    const dbData = await allDbData();
+    const allDataContainer = apiData.concat(dbData);
 
     return allDataContainer
 
 }; 
-
+ */
 
 module.exports = {
 
-     allData,/*
+     /* allData,
     allDbData, */
     allApiData
 
