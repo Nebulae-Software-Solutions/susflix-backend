@@ -108,7 +108,6 @@ const downloadAndSaveMovies = async () => {
     for (let page = 1; page <= totalPages; page++) { await getMovies(page); }
 
     // Manejo de errores
-    if (pagesThrowingErrors.length > 0) bar.setTotal(pagesThrowingErrors.length * 50);
     while (pagesThrowingErrors.length > 0) {
         const page = pagesThrowingErrors.pop();
         console.log(`Error downloading page ${page}, trying again...`);

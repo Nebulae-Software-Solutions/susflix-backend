@@ -8,10 +8,12 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-const moviesRouter = require('./movies');
 const userRouter = require('./users');
+const moviesRouter = require('./movies');
+const genresRouter = require('./genres');
 
 router.use('/user', userRouter);
 router.use('/movies', moviesRouter);
+router.use('/genres', genresRouter);
 
 module.exports = router;
