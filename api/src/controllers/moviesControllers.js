@@ -1,11 +1,11 @@
-const data = require('../apiInfo/allData')
+const data = require('../apiInfo/allDbData')
 
 const get = async (req, res) => {
 
     try {
 
         const { name } = req.query;
-        const recipesAll = await data.allApiData();
+        const recipesAll = await data.allDbData();
 
         if (name) {
 
@@ -31,7 +31,7 @@ const movieId = async (req, res) => {
     try {
 
         const { id } = req.params;
-        const moviesID = await data.allData()
+        const moviesID = await data.allDbData()
 
         if (id) {
             const moviesId = await moviesID.filter(e => e.id == id)
