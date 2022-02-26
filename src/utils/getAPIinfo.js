@@ -16,7 +16,7 @@ const downloadAndSaveMovies = async () => {
 
     const API = {
         BASE_URL: 'https://yts.am/api/v2/list_movies.json',
-        PARAMS: { limit: 50, page: 1, sort_by: "year" },
+        PARAMS: { limit: 50, page: 1, sort_by: "rating" },
     }
     const totalMoviesLimit = 9_900;
     const totalPagesLimit = totalMoviesLimit / API.PARAMS.limit;
