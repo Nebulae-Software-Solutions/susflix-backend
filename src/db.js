@@ -2,16 +2,21 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-  DATABASE_URL
+  DATABASE_URL,
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST
 } = process.env;
 
-const sequelize = new Sequelize(`${DATABASE_URL}?sslmode=no-verify`, {
+const sequelizeUrl = DATABASE_URL?.length > 0 ? `${DATABASE_URL}?sslmode=no-verify` : `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies`
+
+const sequelize = new Sequelize(sequelizeUrl, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
   "dialect": "postgres",
   "dialectOptions": {
-    "ssl": true,
-    "rejectUnauthorized": false
+    // "ssl": true,
+    // "rejectUnauthorized": false
   }
 });
 const basename = path.basename(__filename);

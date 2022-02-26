@@ -25,7 +25,7 @@ const { downloadAndSaveMovies } = require('./src/utils/getAPIinfo.js');
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(async () => {
-  downloadAndSaveMovies();
+  // downloadAndSaveMovies();
   const PORT = process.env.PORT || 3001
   server.listen(PORT, () => {
     console.log('Server listening at 3001'); // eslint-disable-line no-console

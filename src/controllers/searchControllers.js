@@ -5,7 +5,7 @@ const sequelize = require('sequelize');
 
 const get = async (req, res) => {
 
-    var { title, year, genre, rating, order_by, sort, limit, page, offset } = req.query;
+    var { title, year, genre, rating, order_by, sort, limit, page } = req.query;
 
     // We need to make sure that year can be converted to an array of numbers.
     // If that's not the case, we need to set it to an array of all possible numbers.
@@ -33,7 +33,12 @@ const get = async (req, res) => {
     // We also need to convert page, limit, and offset from string to number and asign sensible defaults
     page = +page || 1;
     limit = +limit || 50;
-    offset = +offset || 0;
+    
+    // Now we calculate offset based on page and limit:
+    const offset = (page - 1) * limit;
+
+    // And finally, assign a descending value to the sort variable in case it's ommitted
+    sort = sort?.length > 2 ? sort : 'desc'
 
 
     // ####################################################
@@ -44,7 +49,6 @@ const get = async (req, res) => {
     if (year) where.year = { [Op.between]: year };
     if (genre) where.genres = { [Op.overlap]: genre };
     if (rating) where.rating = { [Op.between]: rating };
-
 
     try {
         const movies = await Movie.findAll({

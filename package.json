@@ -22,13 +22,14 @@
     "express": "^4.17.1",
     "ioredis": "^4.19.2",
     "jsonwebtoken": "^8.5.1",
+    "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.6",
     "pg": "^8.5.1",
     "progress-barjs": "^2.2.1",
     "sequelize": "^6.3.5",
     "uuid": "^8.3.2",
-    "uuidv4": "^6.2.12",
-    "nodemon": "^2.0.6"
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "chai": "^4.2.0",
