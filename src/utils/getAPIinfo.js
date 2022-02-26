@@ -3,7 +3,7 @@ const { Movie } = require('../db.js');
 const axios = require('axios');
 const progressBar = require('progress-barjs');
 
-const { TOTAL_MOVIES_LIMIT } = process.env;
+// const { TOTAL_MOVIES_LIMIT } = process.env;
 
 
 // Necesitamos:
