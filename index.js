@@ -24,7 +24,7 @@ const { conn } = require('./src/db.js');
 const { downloadAndSaveMovies } = require('./src/utils/getAPIinfo.js');
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   await downloadAndSaveMovies();
   const PORT = process.env.PORT || 3001
   server.listen(PORT, () => {
