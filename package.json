@@ -24,6 +24,7 @@
     "ioredis": "^4.19.2",
     "jsonwebtoken": "^8.5.1",
     "memory-cache": "^0.2.0",
+    "moize": "^6.1.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
     "pg": "^8.5.1",

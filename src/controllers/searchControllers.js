@@ -2,7 +2,6 @@ const { Movie } = require('../db');
 const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 
-
 const get = async (req, res) => {
 
     var { title, year, genre, rating, order_by, sort, limit, page } = req.query;
@@ -33,7 +32,7 @@ const get = async (req, res) => {
     // We also need to convert page, limit, and offset from string to number and asign sensible defaults
     page = +page || 1;
     limit = +limit || 50;
-    
+
     // Now we calculate offset based on page and limit:
     const offset = (page - 1) * limit;
 
@@ -45,7 +44,7 @@ const get = async (req, res) => {
     // Options for the database query:
     const where = {};
 
-    if (title) where.title = { [Op.like]: `%${title}%` };
+    if (title) where.title = { [Op.iLike]: `%${title}%` };
     if (year) where.year = { [Op.between]: year };
     if (genre) where.genres = { [Op.overlap]: genre };
     if (rating) where.rating = { [Op.between]: rating };
@@ -57,7 +56,7 @@ const get = async (req, res) => {
             order: order_by && sort && [sequelize.literal(`${order_by} ${sort}`)], // Just so we don't receive only one of them
             limit,
             offset,
-        });
+        })
 
         res.json(movies);
     } catch (error) {
@@ -68,5 +67,6 @@ const get = async (req, res) => {
 
 
 module.exports = {
+    // get: memoGet,
     get,
 }
