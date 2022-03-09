@@ -8,7 +8,14 @@ const {
   DB_HOST
 } = process.env;
 
-const sequelizeUrl = DATABASE_URL?.length > 0 ? `${DATABASE_URL}?sslmode=no-verify` : `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies`
+var sequelizeUrl = ""
+const isGitpod = process.env.GITPOD_BUILD_DIR;
+const isHeroku = process.env.DATABASE_URL.length > 0;
+if (isHeroku) sequelizeUrl = `${DATABASE_URL}?ssl=false`;
+else if (isGitpod) sequelizeUrl = `postgres://gitpod:gitpod@localhost:5432/movies?sslmode=no-verify`;
+else sequelizeUrl = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies`
+
+console.log(`Using database url: ${sequelizeUrl}`)
 
 const sequelize = new Sequelize(sequelizeUrl, {
   logging: false, // set to console.log to see the raw SQL queries
