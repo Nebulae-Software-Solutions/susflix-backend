@@ -25,8 +25,8 @@ const sequelize = new Sequelize(sequelizeUrl, {
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
   "dialect": "postgres",
   "dialectOptions": {
-    // "ssl": true,
-    // "rejectUnauthorized": false
+    "ssl": true,
+    "rejectUnauthorized": false
   }
 });
 
