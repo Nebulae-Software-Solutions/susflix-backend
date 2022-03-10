@@ -120,6 +120,4 @@ const downloadAndSaveMovies = async (totalMoviesLimit) => {
 }
 
 
-module.exports = {
-    downloadAndSaveMovies,
-}
+module.exports = downloadAndSaveMovies

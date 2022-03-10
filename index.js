@@ -18,7 +18,7 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
 const isHeroku = process.env.DATABASE_URL.includes('amazonaws');
-const { downloadAndSaveMovies } = require('./src/utils/getAPIinfo.js');
+const { downloadAndSaveMovies } = require('./src/utils');
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(async () => {
