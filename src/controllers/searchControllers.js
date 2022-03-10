@@ -2,7 +2,7 @@ const { Movie } = require('../db');
 const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 
-const { paramsNormalization } = require('../utils/')
+const { paramsNormalization } = require('../utils/index.js')
 
 const get = async (req, res) => {
 
