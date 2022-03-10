@@ -12,7 +12,7 @@ const {
 const isHeroku = process.env.DATABASE_URL.includes('amazonaws');
 const isGitpod = fs.existsSync('/ide/bin/gitpod-code');
 const sequelizeUrl = isHeroku ? `${DATABASE_URL}?sslmode=no-verify` :
-  isGitpod ? `postgres://gitpod:gitpod@localhost:5432/movies` :
+  isGitpod ? `postgres://gitpod:gitpod@localhost:5432/movies?sslmode=disable` :
     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies`
 
 
