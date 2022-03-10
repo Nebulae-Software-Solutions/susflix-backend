@@ -12,13 +12,12 @@ const progressBar = require('progress-barjs');
 // 3. Guardar en la base de datos.
 
 
-const downloadAndSaveMovies = async () => {
+const downloadAndSaveMovies = async (totalMoviesLimit) => {
 
     const API = {
         BASE_URL: 'https://yts.am/api/v2/list_movies.json',
         PARAMS: { limit: 50, page: 1, sort_by: "date_added" },
     }
-    const totalMoviesLimit = 50_000;
     const totalPagesLimit = totalMoviesLimit / API.PARAMS.limit;
 
     // Averiguamos cuántas películas hay disponibles para descargar
