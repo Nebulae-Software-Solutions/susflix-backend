@@ -15,9 +15,9 @@ const sequelizeUrl = isHeroku ? `${DATABASE_URL}?ssl=false` :
   isGitpod ? `postgres://gitpod:gitpod@localhost:5432/movies` :
     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies`
 
-// console.log(`isHeroku: ${isHeroku}`);
-// console.log(`isGitpod: ${isGitpod}`);
-// console.log(`Using database url: ${sequelizeUrl}`)
+console.log(`isHeroku: ${isHeroku}`);
+console.log(`isGitpod: ${isGitpod}`);
+console.log(`Using database url: ${sequelizeUrl}`)
 
 const sequelize = new Sequelize(sequelizeUrl, {
   logging: false, // set to console.log to see the raw SQL queries
