@@ -24,12 +24,14 @@ var cache = (duration) => {
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
+const authRouter = require('./auth');
 const userRouter = require('./users');
 const genresRouter = require('./genres');
 const searchRouter = require('./search');
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+router.use('/auth', authRouter);
 router.use('/user', userRouter);
 router.use('/genres', cache(60*60*24), genresRouter);
 router.use('/search', cache(60*60*24), searchRouter);
