@@ -1,12 +1,12 @@
 const router = require('express').Router()
-const db = require('../../models')
-const passport = require('../../config/passport')
+const conn = require('../db')
+const passport = require('../config/passport')
 
 // Using the passport.authenticate middleware with our local strategy.
 // passport.authenticate() is a middle ware provided by passport
 // and is configured
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  console.log(req)
+  // console.log(req)
   res.json(req.user)
 })
 
@@ -15,7 +15,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 // Sequelize User Model. If the user is created successfully, proceed
 //  to log the user in, otherwise send back an error
 router.post('/signup', (req, res) => {
-  db.User.create({
+  conn.User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
