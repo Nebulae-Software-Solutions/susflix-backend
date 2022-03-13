@@ -1,9 +1,9 @@
-const { Router } = require('express');
-const { get } = require('../controllers/searchControllers');
+const { Router } = require('express')
+const { get } = require('../controllers/searchControllers')
 
-const router = Router();
+const router = Router()
 
 router.get('/:id', get)
 router.get('/', get)
 
-module.exports = router;
+module.exports = router

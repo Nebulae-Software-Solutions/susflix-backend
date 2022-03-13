@@ -1,6 +1,11 @@
-const { Router } = require('express');
-const router = Router();
-var mcache = require('memory-cache');
+const { Router } = require('express')
+const router = Router()
+var mcache = require('memory-cache')
+
+const authRouter = require('./auth')
+const userRouter = require('./users')
+const genresRouter = require('./genres')
+const searchRouter = require('./search')
 
 // Cache middleware
 var cache = (duration) => {
@@ -13,7 +18,7 @@ var cache = (duration) => {
     } else {
       res.sendResponse = res.send
       res.send = (body) => {
-        mcache.put(key, body, duration * 1000);
+        mcache.put(key, body, duration * 1000)
         res.sendResponse(body)
       }
       next()
@@ -22,18 +27,9 @@ var cache = (duration) => {
 }
 
 
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-const authRouter = require('./auth');
-const userRouter = require('./users');
-const genresRouter = require('./genres');
-const searchRouter = require('./search');
+router.use('/auth', authRouter)
+router.use('/user', userRouter)
+router.use('/genres', cache(60 * 60 * 24), genresRouter)
+router.use('/search', cache(60 * 60 * 24), searchRouter)
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-router.use('/auth', authRouter);
-router.use('/user', userRouter);
-router.use('/genres', cache(60*60*24), genresRouter);
-router.use('/search', cache(60*60*24), searchRouter);
-
-module.exports = router;
+module.exports = router

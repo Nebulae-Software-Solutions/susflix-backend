@@ -1,8 +1,8 @@
 const morgan = require('morgan')
 const express = require('express')
 const session = require('express-session')
-const bodyParser = require('body-parser')
 const compression = require('compression')
+const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const routes = require('./routes/index.js')
 const passport = require('passport')
@@ -10,7 +10,7 @@ const passport = require('passport')
 
 const server = express()
 
-server.name = 'API'
+server.name = 'Movies API'
 
 server.use(express.urlencoded({ extended: true, limit: '50mb' }))
 server.use(express.json({ limit: '50mb' }))

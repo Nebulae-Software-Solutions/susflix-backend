@@ -1,4 +1,4 @@
-const { Movie } = require('../db.js');
+const { Movie } = require('../db.js')
 
 const get = async (req, res) => {
 
@@ -8,7 +8,7 @@ const get = async (req, res) => {
         let genres = await Movie.findAll({
             attributes: ['genres'],
             raw: true,          // To return the raw data instead of the sequelize object.
-        });
+        })
     
         // Genres is an array of objects. Each object has a property named "genres",
         // which is also an array of strings. We want to return only an array of strings.
@@ -16,9 +16,9 @@ const get = async (req, res) => {
             .map(genre => genre.genres)                     // Array of arrays of strings.
             .flat()                                         // Array of strings.
             .sort()                                         // Sorted alphabetically.
-            .filter(g => g != null);                        // Only valid genres.
+            .filter(g => g != null)                         // Only valid genres.
     
-        genres = [...new Set(genres)];                      // Remove duplicates.
+        genres = [...new Set(genres)]                       // Remove duplicates.
      */
 
     const genres = [
@@ -49,8 +49,8 @@ const get = async (req, res) => {
         "War",
         "Western"
     ]
-    
-    res.status(200).json(genres);
+
+    res.status(200).json(genres)
 
 }
 

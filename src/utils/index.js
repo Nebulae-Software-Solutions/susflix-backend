@@ -1,5 +1,5 @@
-const downloadAndSaveMovies = require('./getAPIinfo');
-const paramsNormalization = require('./searchParamsNormalization');
+const downloadAndSaveMovies = require('./getAPIinfo')
+const paramsNormalization = require('./searchParamsNormalization')
 
 module.exports = {
     downloadAndSaveMovies,
