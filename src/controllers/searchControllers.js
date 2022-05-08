@@ -32,7 +32,7 @@ const get = async (req, res) => {
 
     const where = {}
 
-    if (title) where.title = { [Op.iLike]: `%${title}%` }
+    if (title) where.title = { [Op.iLike]: `%${title}%` }   // iLike: case insensitive
     if (year) where.year = { [Op.between]: year }
     if (genre) where.genres = { [Op.overlap]: genre }
     if (rating) where.rating = { [Op.between]: rating }

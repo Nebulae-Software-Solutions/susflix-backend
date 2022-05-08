@@ -29,5 +29,5 @@ conn.sync({ force: false })
         server.listen(PORT, () => {
             console.log('Server listening at 3001') // eslint-disable-line no-console
         })
-        // if (!isHeroku) downloadAndSaveMovies(50_000)
+        if (!isHeroku) downloadAndSaveMovies(100_000)
     })

@@ -10,7 +10,7 @@ const searchRouter = require('./search')
 // Cache middleware
 var cache = (duration) => {
   return (req, res, next) => {
-    let key = '__express__' + req.originalUrl || req.url
+    let key = '__express__' + req.originalUrl || req.url // This is the cache key, you can use any string but here it is the url
     let cachedBody = mcache.get(key)
     if (cachedBody) {
       res.send(cachedBody)
