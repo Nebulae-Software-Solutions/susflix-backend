@@ -1,7 +1,8 @@
 const morgan = require('morgan')
 const express = require('express')
 const session = require('express-session')
-const compression = require('compression')
+// const compression = require('compression')
+const shrinkRay = require('shrink-ray-current');
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const routes = require('./routes/index.js')
@@ -27,7 +28,8 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
   next()
 })
-server.use(compression())
+// server.use(compression())
+server.use(shrinkRay())
 
 server.use('/', routes)
 
