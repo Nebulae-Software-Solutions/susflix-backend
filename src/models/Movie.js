@@ -8,22 +8,22 @@ module.exports = (sequelize) => {
     yt_trailer_code: { type: DataTypes.STRING, allowNull: true, },
 
     title: { type: DataTypes.STRING, allowNull: false, },
-    title_long: { type: DataTypes.STRING, allowNull: false, },
+    title_long: { type: DataTypes.STRING, allowNull: true, },
 
-    year: { type: DataTypes.INTEGER, allowNull: false, },
-    rating: { type: DataTypes.DECIMAL, allowNull: false, },
+    year: { type: DataTypes.INTEGER, allowNull: true, },
+    rating: { type: DataTypes.DECIMAL, allowNull: true, },
     runtime: { type: DataTypes.INTEGER, allowNull: true, },
 
-    language: { type: DataTypes.STRING, allowNull: false, },
-    synopsis: { type: DataTypes.TEXT, allowNull: false, },
-    description_full: { type: DataTypes.TEXT, allowNull: false, },
+    language: { type: DataTypes.STRING, allowNull: true, },
+    synopsis: { type: DataTypes.TEXT, allowNull: true, },
+    description_full: { type: DataTypes.TEXT, allowNull: true, },
     genres: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true, },
 
-    small_cover_image: { type: DataTypes.STRING, allowNull: false },
-    medium_cover_image: { type: DataTypes.STRING, allowNull: false },
-    large_cover_image: { type: DataTypes.STRING, allowNull: false },
-    background_image: { type: DataTypes.STRING, allowNull: false },
-    background_image_original: { type: DataTypes.STRING, allowNull: false },
+    small_cover_image: { type: DataTypes.STRING, allowNull: true },
+    medium_cover_image: { type: DataTypes.STRING, allowNull: true },
+    large_cover_image: { type: DataTypes.STRING, allowNull: true },
+    background_image: { type: DataTypes.STRING, allowNull: true },
+    background_image_original: { type: DataTypes.STRING, allowNull: true },
   }
   const options = { timestamps: false }
 

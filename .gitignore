@@ -106,3 +106,5 @@ dist
 
 # package-lock.json
 package-lock.json
+pnpm-lock.yaml
+.vscode/settings.json

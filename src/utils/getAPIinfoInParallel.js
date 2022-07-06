@@ -102,7 +102,6 @@ const downloadAndSaveMovies = async (totalMoviesLimit) => {
                 })
                 .catch(err => {
                     downloadAndSave([page])
-                    console.log(`Error downloading page ${page}. Trying again...`)
                 })
             )
         })
