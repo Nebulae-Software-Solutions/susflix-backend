@@ -11,9 +11,11 @@ const { Sequelize } = require('sequelize')
 
 const isGitpod = !!fs.existsSync('/ide/bin/gitpod-code')
 const isHeroku = !!process.env.DATABASE_URL?.includes('amazonaws')
-const sequelizeUrl = isHeroku ? `${DATABASE_URL}?sslmode=no-verify` :
-  isGitpod ? `postgres://gitpod:gitpod@localhost:5432/movies?sslmode=disable` :
-    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies?sslmode=disable`
+const isElephantSQL = !!process.env.DATABASE_URL?.includes('elephantsql')
+const sequelizeUrl = isElephantSQL ? `${DATABASE_URL}` :
+  isHeroku ? `${DATABASE_URL}?sslmode=no-verify` :
+    isGitpod ? `postgres://gitpod:gitpod@localhost:5432/movies?sslmode=disable` :
+      `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies?sslmode=disable`
 
 
 console.log(`isHeroku: ${isHeroku}`)
@@ -61,4 +63,5 @@ User.belongsToMany(Movie, { through: 'user_movie' })
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
+  isHeroku: isHeroku,
 }
