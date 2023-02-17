@@ -23,7 +23,7 @@ const downloadAndSaveMovies = async (totalMoviesLimit = 5000) => {
     const pick = (obj, parts) => parts.split('.').reduce((o, p) => o[p], obj)
     const pickMovies = e => pick(e, 'data.data.movies')
     const pickMovieCount = e => pick(e, 'data.data.movie_count')
-    const sanitize = movies => movies.map(movie => ({
+    const normalize = movies => movies.map(movie => ({
         id: movie?.id,
         imdb_code: movie?.imdb_code,
         title: movie?.title,
@@ -45,8 +45,9 @@ const downloadAndSaveMovies = async (totalMoviesLimit = 5000) => {
 
     const allMovies = new Set()
     const dedupe = movies => {
-        const output = movies.filter(movie => !allMovies.has(`${movie.id} - ${movie.title}`))
-        movies.forEach(movie => allMovies.add(`${movie.id} - ${movie.title}`))
+        const identifier = movie => `${movie.id} - ${movie.title}`
+        const output = movies.filter(m => !allMovies.has(identifier(m)))
+        movies.forEach(movie => allMovies.add(identifier(movie)))
         return output
     }
 
@@ -54,9 +55,7 @@ const downloadAndSaveMovies = async (totalMoviesLimit = 5000) => {
         .bulkCreate(movies, { updateOnDuplicate: Object.keys(Movie.tableAttributes) })
         .then(() => movies)
 
-    const showProgress = movies => {
-        movies.forEach(() => { bar.tick('') })
-    }
+    const showProgress = movies => { movies.forEach(() => { bar.tick('') }) }
 
     const totalMoviesInAPI = await get(`${API.BASE_URL}?limit=1`).then(pickMovieCount)
     const totalPagesInAPI = Math.ceil(totalMoviesInAPI / API.PARAMS.limit)
@@ -85,15 +84,15 @@ const downloadAndSaveMovies = async (totalMoviesLimit = 5000) => {
             showProgress,
             saveToDB,
             dedupe,
-            sanitize,
+            normalize,
             pickMovies,
             get
         )(`${API.BASE_URL}?${Object.entries(API.PARAMS).map(([k, v]) => `${k}=${v}`).join('&')}`)
     })
 
-    for (let i = 0; i < allPages.length; i += 15) {
+    for (let i = 0; i < allPages.length; i += 15)
         await Promise.allSettled(allPagesPromises(allPages.slice(i, i + 15)))
-    }
+
     showProgress(Array.from({ length: totalMovies - allMovies.size }, () => ''))
 
     console.log(`Downloaded details about ${totalMovies} movies, ${allMovies.size} unique saved to the database.`)
