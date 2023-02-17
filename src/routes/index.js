@@ -32,7 +32,6 @@ const cache = (duration) => {
 }
 
 
-
 router.use('/auth', authRouter)
 router.use('/user', userRouter)
 router.use('/genres', cache(60 * 60 * 24), genresRouter)

@@ -2,7 +2,11 @@ const { Movie } = require('../db')
 const { Op } = require('sequelize')
 const sequelize = require('sequelize')
 
+const { compressSync } = require("node-zpaq");
+
+const { lzma, lpaq1, xwrt } = require('../utils')
 const { paramsNormalization } = require('../utils/index.js')
+
 
 const get = async (req, res) => {
 
@@ -42,21 +46,19 @@ const get = async (req, res) => {
         const movies = await Movie.findAll({
             where,
             // We need to sort the movies by the order_by parameter, and in the direction of the sort parameter
-            order: order_by && sort && [sequelize.literal(`${order_by} ${sort}`)], // Just so we don't receive only one of them
+            order: order_by && sort && [sequelize.literal(`${order_by} ${sort}`)], // Just so we don't send only one of them
             limit,
             offset,
         })
 
-        // We need to find out how many movies there are in total:
         const count = await Movie.count({ where })
 
-        // Auxiliar function to calculate the next and prevous pages based on the number of movies and the limit:
+        // Auxiliar function to calculate the next and previous pages based on the number of movies and the limit:
         const prevAndNext = (page, limit) => {
             const prev = page - 1
             const next = page + 1
-            const searchStr = (identifier) => (
+            const searchStr = identifier => 
                 `/search?${Object.entries({ ...req.query, page: identifier, limit }).map(([key, value]) => `${key}=${value}`).join('&')}`
-            )
             return {
                 prev: prev > 0 ? searchStr(prev) : null,
                 next: next <= Math.ceil(count / limit) ? searchStr(next) : null
@@ -71,10 +73,42 @@ const get = async (req, res) => {
             pages: Math.ceil(count / limit),
             prev: prevAndNext(page, limit).prev,
             next: prevAndNext(page, limit).next,
-            data: movies,
+            data: movies.sort((a, b) => a.title_long.localeCompare(b.title_long))
         }
 
-        res.json(response)
+        if (req.headers['accept-encoding-extra'] === 'lzma') {
+            const compressedResponse = await lzma(JSON.stringify(response))
+            console.log({ lzma: compressedResponse.length })
+            res.setHeader('Content-Encoding-Extra', 'lzma')
+            return res.send(compressedResponse)
+        }
+        if (req.headers['accept-encoding-extra'] === 'lpaq1') {
+            // if (true) {
+            lpaq1.compress(JSON.stringify(response), 1, compressedResponse => {
+                console.log({ lpaq1: compressedResponse.length })
+                res.setHeader('Content-Encoding-Extra', 'lpaq1')
+                // compressedResponse = Buffer.from(compressedResponse)
+                res.send(compressedResponse)
+            }, () => { })
+            return
+        }
+        if (req.headers['accept-encoding-extra'] === 'zpaq') {
+            const bufferedResponse = new Buffer.from(JSON.stringify(response))
+            const compressedResponse = compressSync(bufferedResponse, { method: "43", sha1: true })
+            // const compressedResponse = compressSync(bufferedResponse, { method: "5", sha1: true })
+            console.log({ zpaq: compressedResponse.length })
+            res.setHeader('Content-Encoding', 'zpaq')
+            return res.send(compressedResponse)
+        }
+        if (req.headers['accept-encoding-extra'] === 'xwrt') {
+            const compressedResponse = await xwrt(JSON.stringify(response), 'l10')
+            console.log({ xwrt: compressedResponse.length })
+            res.setHeader('Content-Encoding-Extra', 'xwrt')
+            return res.send(compressedResponse)
+        }
+
+        else res.json(response)
+
     } catch (error) {
         console.log("Something went wrong: ")
         res.status(500).json({ error: error.message })
