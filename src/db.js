@@ -18,13 +18,14 @@ const sequelizeUrl = isElephantSQL ? `${DATABASE_URL}` :
       `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/movies?sslmode=disable`
 
 
-console.log(`isHeroku: ${isHeroku}`)
-console.log(`isGitpod: ${isGitpod}`)
+console.log({isHeroku})
+console.log({isGitpod})
+console.log({isElephantSQL})
 console.log(`Using database url: ${sequelizeUrl}`)
 
 const sequelize = new Sequelize(sequelizeUrl, {
   logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  native: true, // lets Sequelize know we can use pg-native for ~30% more speed
   "dialect": "postgres",
   "dialectOptions": {
     "ssl": true,
